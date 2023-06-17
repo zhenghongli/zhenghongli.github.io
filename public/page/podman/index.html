@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <script type="application/ld+json">
+
+{  
+  "@context":"http://schema.org",
+  "@type":"Website",
+  "@id":"https:\/\/www.mikezhli.com\/",
+  "author": {
+    "@type": "Person",
+    "name": "ZhengHong Li",
+    
+    "image": "https://www.gravatar.com/avatar/1310d75ee6a2dc08ff56a66c0bb65ea2"
+    
+  },
+  "name":"ZhengHong\u0027s Blog",
+  "description":"\u003cp\u003e在容器技術蓬勃發展的年代，許多人都想要來分一杯羹，因此也不乏許多新的容器技術。\nPodman作為RedHat推出的產品，是一個RHEL OS原生tool讓你方便的在OCI規範下去使用run,build,deploy等指令操作Continaer。以下列出幾個特點。\u003c\/p\u003e",
+  "url":"https:\/\/www.mikezhli.com\/page\/podman\/",
+  "keywords":"[tech]"
+}
+
+</script>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.5.3-BETA">
+<meta name="author" content="ZhengHong Li">
+<meta name="keywords" content="tech">
+<meta name="description" content="在容器技術蓬勃發展的年代，許多人都想要來分一杯羹，因此也不乏許多新的容器技術。
+Podman作為RedHat推出的產品，是一個RHEL OS原生tool讓你方便的在OCI規範下去使用run,build,deploy等指令操作Continaer。以下列出幾個特點。">
+
+
+<meta property="og:description" content="在容器技術蓬勃發展的年代，許多人都想要來分一杯羹，因此也不乏許多新的容器技術。
+Podman作為RedHat推出的產品，是一個RHEL OS原生tool讓你方便的在OCI規範下去使用run,build,deploy等指令操作Continaer。以下列出幾個特點。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="淺談 Podman 與使用分享">
+<meta name="twitter:title" content="淺談 Podman 與使用分享">
+<meta property="og:url" content="https://www.mikezhli.com/page/podman/">
+<meta property="twitter:url" content="https://www.mikezhli.com/page/podman/">
+<meta property="og:site_name" content="ZhengHong&#39;s Blog">
+<meta property="og:description" content="在容器技術蓬勃發展的年代，許多人都想要來分一杯羹，因此也不乏許多新的容器技術。
+Podman作為RedHat推出的產品，是一個RHEL OS原生tool讓你方便的在OCI規範下去使用run,build,deploy等指令操作Continaer。以下列出幾個特點。">
+<meta name="twitter:description" content="在容器技術蓬勃發展的年代，許多人都想要來分一杯羹，因此也不乏許多新的容器技術。
+Podman作為RedHat推出的產品，是一個RHEL OS原生tool讓你方便的在OCI規範下去使用run,build,deploy等指令操作Continaer。以下列出幾個特點。">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2017-03-24T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2022-07-23T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="Container">
+    
+  
+  
+    
+      <meta property="article:tag" content="Podman">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/1310d75ee6a2dc08ff56a66c0bb65ea2?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/1310d75ee6a2dc08ff56a66c0bb65ea2?s=640">
+
+
+
+
+
+
+    <title>淺談 Podman 與使用分享</title>
+
+    <link rel="icon" href="https://www.mikezhli.com/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.mikezhli.com/page/podman/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    
+    
+    <link rel="stylesheet" href="https://www.mikezhli.com/css/style-h6ccsoet3mzkbb0wngshlfbaweimexgqcxj0h5hu4h82olsdzz6wmqdkajm.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.mikezhli.com/" aria-label="Go to homepage">ZhengHong&#39;s Blog</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.mikezhli.com/#about" aria-label="Open the link: /#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/1310d75ee6a2dc08ff56a66c0bb65ea2?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.mikezhli.com/#about" aria-label="Read more about the author">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/1310d75ee6a2dc08ff56a66c0bb65ea2?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">ZhengHong Li</h4>
+        
+          <h5 class="sidebar-profile-bio">喜歡分享技術，也怕自己忘記，因此建立一個地方紀錄</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.mikezhli.com/" title="Home">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-home" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.mikezhli.com/categories" title="Categories">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-bookmark" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.mikezhli.com/tags" title="Tags">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-tags" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.mikezhli.com/archives" title="Archives">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-archive" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.mikezhli.com/#about" title="About">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-question" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/zhenghongli" target="_blank" rel="noopener" title="GitHub">
+    
+      <i class="sidebar-button-icon fab fa-lg fa-github" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/636472/kakawait" target="_blank" rel="noopener" title="Stack Overflow">
+    
+      <i class="sidebar-button-icon fab fa-lg fa-stack-overflow" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.mikezhli.com/index.xml" title="RSS">
+    
+      <i class="sidebar-button-icon fas fa-lg fa-rss" aria-hidden="true"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" id="top">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title">
+      淺談 Podman 與使用分享
+    </h1>
+  
+  
+</div>
+          
+          <div class="post-content markdown">
+            <div class="main-content-wrap">
+              <p>在容器技術蓬勃發展的年代，許多人都想要來分一杯羹，因此也不乏許多新的容器技術。
+Podman作為RedHat推出的產品，是一個RHEL OS原生tool讓你方便的在OCI規範下去使用run,build,deploy等指令操作Continaer。以下列出幾個特點。</p>
+<ul>
+<li>Daemonless</li>
+<li>指令與Docker相似</li>
+<li>可以在root or non-privileged user執行(會有各自的storage以及user)</li>
+<li>支援RESTFul API 方式操作Podman(需要自行設置啟動)</li>
+</ul>
+<p>我們可以過架構圖很好的比較Docker與Podman，很明顯Redhat想打造自己的生態圈，除了Podman之外還包含了Skopeo、Buildah，讓build image功能以及對registry的操作分開，讓Podman能夠更專注在container上面。
+<img src="https://i.imgur.com/5nrIg4p.jpg" alt="">
+(圖片擷取自 <a href="https://ios.dz/from-docker-to-podman/">https://ios.dz/from-docker-to-podman/</a>)</p>
+<h3 id="oci-projects-plans">OCI Projects Plans</h3>
+<p>Podman 使用了OCI規範以及各種的lib去建構，以下是他在各個面向中所使用的不同技術:</p>
+<ul>
+<li>Runtime: 可以支援OCI相關的runtime像是runc以及crun。</li>
+<li>Images: 管理image是使用<a href="https://github.com/containers/image">containers/image</a>，另外skopeo也是使用此lib去撰寫的，並且擁有其他更便利的功能。</li>
+<li>Storage: 容器與image儲存的管理是使用 <a href="https://github.com/containers/storage">containers/storage</a>。</li>
+<li>Networking: 網路的架構使用 Netavark 以及 Aardvark專案，Rootless Network namespces 則是使用slirp4netns專案。此外它也支援CNI。</li>
+<li>Builds: Podman本身自帶Build指令的Source code是從Buildah來的，不過更多其他的功能還是Buildah本身才有辦法使用。</li>
+<li>Conmon: Conmon 是監控 OCI containers的工具，除了Podman之外也被使用在CRI-O，。</li>
+<li>Seccomp: 可定義Policy對Podman, Buildah, and CRI-O進行System call等權限控管。</li>
+</ul>
+<h2 id="不同容器技術的關聯">不同容器技術的關聯</h2>
+<p>下圖是一張很棒的架構圖，是從某一篇文章的作者擷取過來，有興趣可以參考連結閱讀原文。作者將相關的技術都列出加以分類，這邊我簡略介紹各層級的作用</p>
+<ul>
+<li>High-level container management: 管控指令介面，可以透過CLI or API or CRI的方式呼叫High-level runtime</li>
+<li>High-level container runtime: 就是實作OCI的規範(Image spec, Runtime spec)產出bundle以及config給low-level runtime執行。此外network相關設定也是這層所建立的，包含創建bridge、veth，以及連結到namespace。</li>
+<li>Low-level container runtime: 根據Image產出的config建立對應的cgroup、namespace環境，以及載入bundle到環境內。
+<img src="https://i.imgur.com/OXywAao.jpg" alt="">
+(圖片擷取自: <a href="https://merlijn.sebrechts.be/blog/2020-01-docker-podman-kata-cri-o/">https://merlijn.sebrechts.be/blog/2020-01-docker-podman-kata-cri-o/</a>)</li>
+</ul>
+<h3 id="cri-o-與-podman-的關聯">CRI-O 與 Podman 的關聯</h3>
+<p>因為Podman是使用libpod做的，而libpod是從CRI-O分出來的，所以可能會有人誤會Podman可以直接提供給Kubernetes作為CRI使用，為釐清他們之間的關聯，我們可以透過流程圖來理解他們之間的關係。根據圖上所示CRI-O是透過CRI協定呼叫，並且使用containers/image以及runc去執行出一個container環境，而Podman則是自己直接實作溝通的方式，因此Podman的指令就只有自己使用，而不能透過CRI操作Podman，但因為Podman與CRI-O都是使用containers/image、containers/storage作為lib，所以透過sudo podman images與crictl images可以看到相同的結果。
+<img src="https://i.imgur.com/T4yoWyo.png" alt="">
+(圖片擷取自  <a href="https://cloud.redhat.com/hubfs/Imported_Blog_Media/Contianer-Standards-Work-Podman-vs_-CRICTL.png">https://cloud.redhat.com/hubfs/Imported_Blog_Media/Contianer-Standards-Work-Podman-vs_-CRICTL.png</a>)</p>
+<p>以下是我的環境，同時安裝了CRI-O以及Podman，並且安裝了K8S，因此可以看到都有K8S相關的images</p>
+<p>crictl指令 :
+<code>crictl images | gre k8s</code>
+<img src="https://i.imgur.com/MmweFp7.png" alt=""></p>
+<p>podman指令(請自行切換成root or 使用sudo) :
+<code>podman images | grep k8s</code>
+<img src="https://i.imgur.com/zdmyyTR.png" alt=""></p>
+<h2 id="實際操作">實際操作</h2>
+<h3 id="環境">環境</h3>
+<ul>
+<li>OS:RHEL 8.4</li>
+<li>RAM: 8 Gb</li>
+<li>CPU: 4 Core</li>
+</ul>
+<h3 id="podman-安裝">Podman 安裝</h3>
+<ol>
+<li>yum安裝
+<code>sudo yum -y install podman</code></li>
+<li>版本檢查
+<code>podman --verison</code></li>
+<li>檢查狀態
+<code>podman info</code></li>
+</ol>
+<h3 id="podman-cli">Podman CLI</h3>
+<ol>
+<li>拉取Image
+<code>podman pull &lt;image&gt;</code>
+如有多個來源的話可以選擇從哪個registry抓取
+<img src="https://i.imgur.com/0fYc9dT.png" alt=""></li>
+<li>顯示Image
+<code>podman images</code>
+<img src="https://i.imgur.com/wHS69SR.png" alt=""></li>
+<li>執行Container
+<code>podman run -d -p 8080:80 nginx</code>
+用curl檢查Container服務
+<code>curl -I localhost:8080</code>
+<img src="https://i.imgur.com/KGngpyt.png" alt=""></li>
+<li>顯示執行的image
+<code>podman ps</code>
+<img src="https://i.imgur.com/KEzCcbT.png" alt=""></li>
+<li>檢查running cintainer
+<code>podman inspect &lt;image-id/name&gt;</code></li>
+<li>停止 container
+<code>podman stop &lt;image-id/name&gt;</code></li>
+<li>刪除 container
+<code>podman rm &lt;image-id/name&gt;</code></li>
+</ol>
+<h3 id="registry-設定">Registry 設定</h3>
+<p>增加Harbor ca.crt憑證</p>
+<pre tabindex="0"><code># downlaod harbor ca
+HARBOR_DOMAIN={YOUR_HARBOR_CORE_DOMAIN}
+curl https://${HARBOR_DOMAIN}/api/v2.0/systeminfo/getcert  --insecure --output ca.crt
+
+# move cat to trust anchors
+sudo mv ca.crt /etc/pki/ca-trust/source/anchors
+# update trust list
+sudo update-ca-trust
+</code></pre><p>registry來源清單設定</p>
+<pre tabindex="0"><code>sudo vim /etc/containers/registries.conf
+# unqualified-search-registries 指定使用內網的 registry
+# 將自己的registry加入清單中
+unqualified-search-registries = [&#39;registry.access.redhat.com&#39;, &#39;registry.redhat.io&#39;, &#39;docker.io&#39;, &#39;local.registry.example&#39;]
+</code></pre><p>重啟服務</p>
+<pre tabindex="0"><code>sudo systemctl daemon-reload
+sudo systemctl restart crio
+</code></pre><h2 id="資料參考">資料參考</h2>
+<ul>
+<li><a href="https://middlewaretechnologies.in/2020/11/how-to-use-podman-rest-api-service-to-query-and-manage-linux-containers-system.html">https://middlewaretechnologies.in/2020/11/how-to-use-podman-rest-api-service-to-query-and-manage-linux-containers-system.html</a></li>
+<li><a href="https://github.com/containers/podman/blob/main/docs/tutorials/podman_tutorial.md">https://github.com/containers/podman/blob/main/docs/tutorials/podman_tutorial.md</a></li>
+<li><a href="https://www.jianshu.com/p/2a58136886ba">https://www.jianshu.com/p/2a58136886ba</a></li>
+<li><a href="https://dywang.csie.cyut.edu.tw/dywang/rhcsa8/node156.html">https://dywang.csie.cyut.edu.tw/dywang/rhcsa8/node156.html</a></li>
+<li><a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/sec-shared-system-certificates">https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/sec-shared-system-certificates</a></li>
+<li><a href="https://ios.dz/from-docker-to-podman/">https://ios.dz/from-docker-to-podman/</a></li>
+<li><a href="https://faun.pub/kubernetes-story-deep-into-container-runtime-db1a41ed2132">https://faun.pub/kubernetes-story-deep-into-container-runtime-db1a41ed2132</a>,</li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10216880">https://ithelp.ithome.com.tw/articles/10216880</a></li>
+<li><a href="https://www.raygecao.cn/posts/oci-distribution/">https://www.raygecao.cn/posts/oci-distribution/</a></li>
+<li><a href="https://www.readfog.com/a/1668597455567032320">https://www.readfog.com/a/1668597455567032320</a></li>
+</ul>
+              
+
+
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.mikezhli.com/tags/podman/">Podman</a>
+
+                  </div>
+                
+              
+            
+            
+
+            
+  
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https:\/\/www.mikezhli.com\/page\/podman\/';
+        
+          this.page.identifier = '\/page\/podman\/'
+        
+      };
+      (function() {
+        
+        
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+          document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+          return;
+        }
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'hugo-tranquilpeak-theme';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+  
+
+
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2023 ZhengHong Li. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+
+      </div>
+      
+<div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-times"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.mikezhli.com%2Fpage%2Fpodman%2F" aria-label="Share on Facebook">
+          <i class="fab fa-facebook-square" aria-hidden="true"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/zhenghongli1%25!%28EXTRA%20string=https%3A%2F%2Fwww.mikezhli.com%2Fpage%2Fpodman%2F%29" aria-label="Share on Twitter">
+          <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.mikezhli.com%2Fpage%2Fpodman%2F" aria-label="Share on Linkedin">
+          <i class="fab fa-linkedin" aria-hidden="true"></i><span>Share on Linkedin</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+
+
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-times"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/1310d75ee6a2dc08ff56a66c0bb65ea2?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">ZhengHong Li</h4>
+    
+      <div id="about-card-bio">喜歡分享技術，也怕自己忘記，因此建立一個地方紀錄</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        System Intergration Engineer
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker-alt"></i>
+        <br/>
+        Taiwan, Taipei
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://www.mikezhli.com/images/cover.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js" integrity="sha512-z+/WWfyD5tccCukM4VvONpEtLmbAm5LDu7eKiyMQJ9m7OfPEDL7gENyDRL3Yfe8XAuGsS2fS4xSMnl6d30kqGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script src="https://www.mikezhli.com/js/script-yqzy9wdlzix4lbbwdnzvwx3egsne77earqmn73v9uno8aupuph8wfguccut.min.js"></script>
+
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-gE8KAQyFIzV1C9+GZ8TKJHZS2s+n7EjNtC+IMRn1l5+WYJTHOODUM6JSjZhFhqXmc7bG8Av6XXpckA4tYhflnw==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/apache.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-EWROca+bote+7Oaaar1F6y74iZj1r1F9rm/ly7o+/FwJopbBaWtsFDmaKoZDd3QiGU2pGacBirHJNivmGLYrow==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/go.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-GDVzAn0wpx1yVtQsRWmFc6PhJiLBPdUic+h4GWgljBh904O3JU10fk9EKNpVyIoPqkFn54rgL2QBG4BmUTMpiQ==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/http.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-UgZlma8NzkrDb/NWgmLIcTrH7i/CSnLLDRFqCSNF5NGPpjKmzyM25qcoXGOup8+cDakKyaiTDd7N4dyH4YT+IA==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/less.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-lot9koe73sfXIrUvIPM/UEhuMciN56RPyBdOyZgfO53P2lkWyyXN7J+njcxIIBRV+nVDQeiWtiXg+bLAJZDTfg==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/nginx.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-Zd3e7XxHP00TD0Imr0PIfeM0fl0v95kMWuhyAS3Wn1UTSXTkz0OhtRgBAr4JlmADRgiXr4x7lpeUdqaGN8xIog==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/puppet.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-qtqDO052iXMSP+5d/aE/jMtL9vIIGvONgTJziC2K/ZIB1yEGa55WVxGE9/08rSQ62EoDifS9SWVGZ7ihSLhzMA==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/scss.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-1NmkjnEDnwwwcu28KoQF8vs3oaPFokQHbmbtwGhFfeDsQZtVFI8zW2aE9O8yMYdpdyKV/5blE4pSWw4Z/Sv97w==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/stylus.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-B2wSfruPjr8EJL6IIzQr1eAuDwrsfIfccNf/LCEdxELCgC/S/ZMt/Uvk80aD79m7IqOqW+Sw8nbkvha20yZpzg==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/swift.min.js"></script>
+  
+
+  
+    <script async crossorigin="anonymous" defer integrity="sha512-28oDiQZGKUVN6wQ7PSLPNipOcmkCALXKwOi7bnkyFf8QiMZQxG9EQoy/iiNx6Zxj2cG2SbVa4dXKigQhu7GiFw==" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/languages/yaml.min.js"></script>
+  
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+
+
+    
+  </body>
+</html>
+

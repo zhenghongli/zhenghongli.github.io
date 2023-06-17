@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on ZhengHong&#39;s Blog</title>
+    <link>https://www.mikezhli.com/tags/</link>
+    <description>Recent content in Tags on ZhengHong&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 23 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://www.mikezhli.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CRI-O</title>
+      <link>https://www.mikezhli.com/tags/cri-o/</link>
+      <pubDate>Thu, 23 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.mikezhli.com/tags/cri-o/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kubernetes</title>
+      <link>https://www.mikezhli.com/tags/kubernetes/</link>
+      <pubDate>Thu, 23 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.mikezhli.com/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>LVM</title>
+      <link>https://www.mikezhli.com/tags/lvm/</link>
+      <pubDate>Sat, 23 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.mikezhli.com/tags/lvm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Podman</title>
+      <link>https://www.mikezhli.com/tags/podman/</link>
+      <pubDate>Sat, 23 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.mikezhli.com/tags/podman/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

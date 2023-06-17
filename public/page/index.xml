@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pages on ZhengHong&#39;s Blog</title>
+    <link>https://www.mikezhli.com/page/</link>
+    <description>Recent content in Pages on ZhengHong&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 23 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://www.mikezhli.com/page/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Installing Kubernets CRI-O in RHEL 8.4</title>
+      <link>https://www.mikezhli.com/page/k8s-crio/</link>
+      <pubDate>Thu, 23 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.mikezhli.com/page/k8s-crio/</guid>
+      <description>&lt;p&gt;K8S(Kubernetes)近年來發展的十分迅速，Red Hat也出了十分知名的OCP(Openshift Container Platform)，而其中OCP就是選擇CRI-O作為K8S的CRI(Container Runtime)。由於本篇幅主要是介紹使用，在此僅稍微介紹CRI-O。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>LVM Extent Volume</title>
+      <link>https://www.mikezhli.com/page/lvm-extent/</link>
+      <pubDate>Sat, 23 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.mikezhli.com/page/lvm-extent/</guid>
+      <description>&lt;p&gt;LVM (Logical Volume Manager)。Linux Kernel提供的邏輯磁區管理器，主要提供動態調整磁區功能，當磁區空間不足時，可以利用其他硬碟或未切割硬碟的空間進行調整，而非對原先的磁區操作，因此調整時不會影響原先磁區作業。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>淺談 Podman 與使用分享</title>
+      <link>https://www.mikezhli.com/page/podman/</link>
+      <pubDate>Sat, 23 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.mikezhli.com/page/podman/</guid>
+      <description>&lt;p&gt;在容器技術蓬勃發展的年代，許多人都想要來分一杯羹，因此也不乏許多新的容器技術。
+Podman作為RedHat推出的產品，是一個RHEL OS原生tool讓你方便的在OCI規範下去使用run,build,deploy等指令操作Continaer。以下列出幾個特點。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
